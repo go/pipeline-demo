@@ -27,10 +27,8 @@ spec:
       labels:
         app: pipeline-demo
     spec:
-      imagePullSecrets:
-      - name: pipeline-docker-registry
       containers:
       - name: pipeline-demo
-        image: pipeline-demo
+        image: gochiba/pipeline-demo
         ports:
         - containerPort: 80
