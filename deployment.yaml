@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pipeline-svc
+spec:
+  selector:
+    app: pipeline-demo
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipeline-demo
+  labels:
+    app: pipeline-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipeline-demo
+  template:
+    metadata:
+      labels:
+        app: pipeline-demo
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: pipeline-demo
+        image: pipeline-demo
+        ports:
+        - containerPort: 80
